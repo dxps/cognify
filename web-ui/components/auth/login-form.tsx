@@ -17,8 +17,15 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
+import { login } from '@/actions/login'
+import { useState, useTransition } from 'react'
+import { LoaderCircle } from 'lucide-react'
 
 export const LoginForm = () => {
+	const [error, setError] = useState<string | undefined>(undefined)
+	const [success, setSuccess] = useState<string | undefined>(undefined)
+	const [isPending, startTransition] = useTransition()
+
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -26,8 +33,16 @@ export const LoginForm = () => {
 			password: '',
 		},
 	})
+
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-		console.log(values)
+		setError(undefined)
+		setSuccess(undefined)
+		startTransition(() => {
+			login(values).then((data) => {
+				setError(data.error)
+				setSuccess(data.success)
+			})
+		})
 	}
 
 	return (
@@ -54,6 +69,7 @@ export const LoginForm = () => {
 											{...field}
 											placeholder="john.doe@example.com"
 											type="email"
+											disabled={isPending}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -71,6 +87,7 @@ export const LoginForm = () => {
 											{...field}
 											placeholder="******"
 											type="password"
+											disabled={isPending}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -78,10 +95,18 @@ export const LoginForm = () => {
 							)}
 						/>
 					</div>
-					<FormError message="" />
-					<FormSuccess message="" />
-					<Button type="submit" className="w-full">
-						Login
+					<FormError message={error} />
+					<FormSuccess message={success} />
+					<Button
+						type="submit"
+						className="w-full"
+						disabled={isPending}
+					>
+						{isPending ? (
+							<LoaderCircle className="animate-spin" />
+						) : (
+							'Login'
+						)}
 					</Button>
 				</form>
 			</Form>

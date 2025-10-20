@@ -21,6 +21,14 @@ export const metadata: Metadata = {
 				type: 'image/svg+xml',
 				url: '/logo.svg',
 			},
+			{
+				type: 'image/png',
+				url: '/logo.png',
+			},
+			{
+				type: 'image/x-icon',
+				url: '/favicon.ico',
+			},
 		],
 	},
 }

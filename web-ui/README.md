@@ -8,6 +8,13 @@ This is the Web interface for the Cognify project.
 
 1. Run `npm i` to install the dependencies.
 1. Run `npx prisma generate` to generate the Prisma client.
+1. Create a `.env` file in the root directory and populate it with:
+    ```
+    DATABASE_URL="postgresql://{user}:{password}@{host}/{database}?sslmode=require&channel_binding=require"
+    BETTER_AUTH_SECRET='cognify-dev-auth-secret'  # Secret key used by better-auth logic.
+    BETTER_AUTH_URL=http://localhost:3000         # Base URL of the app.
+    ```
+1. Run `npx prisma db push` to push the Prisma database schema to the database.
 
 <br/>
 

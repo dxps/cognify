@@ -13,18 +13,22 @@ import {
 } from '@/components/ui/form'
 import { RegisterSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
-import { register } from '@/actions/register'
 import { useState, useTransition } from 'react'
 import { LoaderCircle } from 'lucide-react'
+import { signUp } from '@/lib/auth-client'
+import { getCallbackURL } from '@/lib/shared'
 
 export const RegisterForm = () => {
 	const [error, setError] = useState<string | undefined>(undefined)
 	const [success, setSuccess] = useState<string | undefined>(undefined)
 	const [isPending, startTransition] = useTransition()
+	const router = useRouter()
+	const params = useSearchParams()
 
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
@@ -37,10 +41,28 @@ export const RegisterForm = () => {
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		setError(undefined)
 		setSuccess(undefined)
-		startTransition(() => {
-			register(values).then((data) => {
-				setError(data.error)
-				setSuccess(data.success)
+		startTransition(async () => {
+			const { name, email, password } = values
+			await signUp.email({
+				name,
+				email,
+				password,
+				callbackURL: '/settings',
+				fetchOptions: {
+					onError: (ctx) => {
+						console.log(
+							'>>> [RegisterForm] error:',
+							ctx.error.message
+						)
+						setError(ctx.error.message)
+					},
+					onSuccess: async () => {
+						console.log(
+							'>>> [RegisterForm] Successfully signed up.'
+						)
+						router.push(getCallbackURL(params))
+					},
+				},
 			})
 		})
 	}

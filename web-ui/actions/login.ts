@@ -4,8 +4,7 @@ import { LoginSchema } from '@/schemas'
 import z from 'zod'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { getUserByEmail } from '@/data/user'
-import { AuthError } from 'next-auth'
-import { auth } from '@/auth'
+import { signIn } from '@/lib/auth-client'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
 	// Simulating a delay, just to show the loading state in the LoginForm.
@@ -27,25 +26,38 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 		return { error: 'Email does not exist!' }
 	}
 
-	try {
-		await auth.api.signInEmail({ body: { email, password } }) // signIn('credentials', {
-		// email,
-		// password,
-		// redirectTo: DEFAULT_LOGIN_REDIRECT,
-		// })
-	} catch (error) {
-		if (error instanceof AuthError) {
-			switch (error.type) {
-				case 'CredentialsSignin':
-					return { error: 'Invalid credentials!' }
-				default:
-					return { error: 'Something went wrong!' }
-			}
+	const { data, error } = await signIn.email(
+		{
+			email,
+			password,
+			callbackURL: DEFAULT_LOGIN_REDIRECT,
+			rememberMe: false,
+		},
+		{
+			onError: (ctx) => {
+				console.log('>>> [Login] error:', ctx.error.message)
+			},
+			onSuccess: async () => {
+				console.log('>>> [Login] Successfully signed in.')
+			},
+		}
+	)
+
+	if (error) {
+		return {
+			error: error.message,
+		}
+	}
+
+	if (data) {
+		return {
+			success: true,
+			user: data.user,
 		}
 	}
 
 	return {
-		success: 'Successfully logged in',
+		success: 'TBD',
 	}
 }
 

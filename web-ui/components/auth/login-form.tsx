@@ -17,9 +17,10 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
-import { login } from '@/actions/login'
 import { useState, useTransition } from 'react'
 import { LoaderCircle } from 'lucide-react'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { signIn } from '@/lib/auth-client'
 
 export const LoginForm = () => {
 	const [error, setError] = useState<string | undefined>(undefined)
@@ -37,11 +38,22 @@ export const LoginForm = () => {
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 		setError(undefined)
 		setSuccess(undefined)
-		startTransition(() => {
-			login(values).then((data) => {
-				setError(data.error)
-				setSuccess(data.success)
-			})
+		startTransition(async () => {
+			const { email, password } = values
+			try {
+				const result = await signIn.email({
+					email,
+					password,
+					callbackURL: DEFAULT_LOGIN_REDIRECT,
+				})
+				console.log('[Login] result:', result)
+				if (result.error) {
+					setError(result.error.message)
+				}
+			} catch (error) {
+				console.log('[Login] error:', error)
+				setError(error as string)
+			}
 		})
 	}
 

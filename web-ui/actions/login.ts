@@ -4,66 +4,49 @@ import { LoginSchema } from '@/schemas'
 import z from 'zod'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { getUserByEmail } from '@/data/user'
-import { signIn } from '@/lib/auth-client'
+import { auth } from '@/lib/auth'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
 	// Simulating a delay, just to show the loading state in the LoginForm.
 	await new Promise((resolve) => setTimeout(resolve, 1000))
 
 	const validatedFields = LoginSchema.safeParse(values)
-
 	if (!validatedFields.success) {
 		return {
+			success: false,
 			error: 'Invalid credentials',
 		}
 	}
-
 	const { email, password } = validatedFields.data
-
 	const existingUser = await getUserByEmail(email)
-
-	if (!existingUser || !existingUser.email || !existingUser.password) {
-		return { error: 'Email does not exist!' }
-	}
-
-	const { data, error } = await signIn.email(
-		{
-			email,
-			password,
-			callbackURL: DEFAULT_LOGIN_REDIRECT,
-			rememberMe: false,
-		},
-		{
-			onError: (ctx) => {
-				console.log('>>> [Login] error:', ctx.error.message)
-			},
-			onSuccess: async () => {
-				console.log('>>> [Login] Successfully signed in.')
-			},
-		}
-	)
-
-	if (error) {
+	if (!existingUser || !existingUser.email) {
 		return {
-			error: error.message,
+			success: false,
+			error: 'Email does not exist!',
 		}
 	}
 
-	if (data) {
-		return {
-			success: true,
-			user: data.user,
-		}
-	}
-
-	return {
-		success: 'TBD',
-	}
+	await auth.api
+		.signInEmail({
+			body: {
+				email,
+				password,
+				callbackURL: DEFAULT_LOGIN_REDIRECT,
+				rememberMe: false,
+			},
+		})
+		.then((result) => {
+			console.log('>>> [login action] data:', result)
+			return {
+				success: true,
+				user: result.user,
+			}
+		})
+		.catch((err) => {
+			console.log('>>> [login action] error:', err)
+			return {
+				success: false,
+				error: err.message,
+			}
+		})
 }
-
-// function signIn(
-// 	arg0: string,
-// 	arg1: { email: string; password: string; redirectTo: string }
-// ) {
-// 	throw new Error('Function not implemented.')
-// }

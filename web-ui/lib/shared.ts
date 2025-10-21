@@ -1,3 +1,4 @@
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 
 const allowedCallbackSet: ReadonlySet<string> = new Set([
@@ -13,7 +14,7 @@ export const getCallbackURL = (
 		if (allowedCallbackSet.has(callbackUrl)) {
 			return callbackUrl
 		}
-		return '/settings'
+		return DEFAULT_LOGIN_REDIRECT
 	}
-	return '/settings'
+	return DEFAULT_LOGIN_REDIRECT
 }

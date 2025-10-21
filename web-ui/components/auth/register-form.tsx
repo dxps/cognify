@@ -22,6 +22,7 @@ import { useState, useTransition } from 'react'
 import { LoaderCircle } from 'lucide-react'
 import { signUp } from '@/lib/auth-client'
 import { getCallbackURL } from '@/lib/shared'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
 export const RegisterForm = () => {
 	const [error, setError] = useState<string | undefined>(undefined)
@@ -47,7 +48,7 @@ export const RegisterForm = () => {
 				name,
 				email,
 				password,
-				callbackURL: '/settings',
+				callbackURL: DEFAULT_LOGIN_REDIRECT,
 				fetchOptions: {
 					onError: (ctx) => {
 						console.log(

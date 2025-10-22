@@ -20,7 +20,7 @@ export default function Home() {
 				>
 					Welcome!
 				</h1>
-				<div>
+				<div className="flex justify-center">
 					<LoginButton>
 						<Button
 							variant="secondary"

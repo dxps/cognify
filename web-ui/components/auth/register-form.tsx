@@ -127,6 +127,7 @@ export const RegisterForm = () => {
 											{...field}
 											type="password"
 											disabled={isPending}
+											autoComplete="off"
 										/>
 									</FormControl>
 									<FormMessage />

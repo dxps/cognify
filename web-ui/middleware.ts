@@ -9,7 +9,7 @@ import {
 
 export async function middleware(req: NextRequest) {
 	const { nextUrl } = req
-	const sessionCookie = getSessionCookie(req)
+	const sessionCookie = getSessionCookie(req, { cookiePrefix: 'cognify' })
 	const isLoggedIn = !!sessionCookie
 	const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
 	const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
@@ -25,7 +25,9 @@ export async function middleware(req: NextRequest) {
 		'isPublicRoute:',
 		isPublicRoute,
 		'isAuthRoute:',
-		isAuthRoute
+		isAuthRoute,
+		'sessionCookie:',
+		sessionCookie
 	)
 
 	if (isApiAuthRoute) {

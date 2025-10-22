@@ -6,6 +6,10 @@ import { nextCookies } from 'better-auth/next-js'
 const prisma = new PrismaClient()
 
 export const auth = betterAuth({
+	advanced: {
+		cookiePrefix: 'cognify',
+	},
+
 	database: prismaAdapter(prisma, {
 		provider: 'postgresql',
 	}),

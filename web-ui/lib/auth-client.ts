@@ -5,4 +5,4 @@ const client = createAuthClient({
 	baseURL: 'http://localhost:3000',
 })
 
-export const { signIn, signUp, useSession } = client
+export const { signIn, signOut, signUp, useSession } = client

@@ -18,14 +18,14 @@ export default function Home() {
 						font.className
 					)}
 				>
-					Auth
+					Welcome!
 				</h1>
 				<div>
 					<LoginButton>
 						<Button
 							variant="secondary"
 							size="lg"
-							className="cursor-pointer drop-shadow-sm"
+							className="cursor-pointer drop-shadow-sm bg-white"
 						>
 							Sign in
 						</Button>

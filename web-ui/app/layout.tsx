@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Navbar } from '@/components/navbar'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -39,11 +41,32 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
+		<html
+			lang="en"
+			// TODO: Added this just
+			suppressHydrationWarning
+		>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<>
+						<header>
+							<Navbar />
+						</header>
+					</>
+				</ThemeProvider>
 				{children}
+				<footer className="py-4">
+					<div className="container mx-auto text-xs text-muted-foreground text-center">
+						&copy; {new Date().getFullYear()} cognify
+					</div>
+				</footer>
 			</body>
 		</html>
 	)

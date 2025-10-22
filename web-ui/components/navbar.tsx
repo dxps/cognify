@@ -8,7 +8,7 @@ import { Skeleton } from './ui/skeleton'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'
 
-export const globalSections = [{ id: 1, name: 'Home', href: '/home' }]
+export const globalSections = [{ id: 1, name: 'Home', href: '/' }]
 
 export function Navbar() {
 	const { data, isPending } = useSession()
@@ -23,7 +23,10 @@ export function Navbar() {
 	}
 
 	return (
-		<div className="container mx-auto flex h-16 items-center justify-between">
+		<div
+			className="container mx-auto flex h-12 items-center justify-between"
+			suppressHydrationWarning={true}
+		>
 			<div>
 				<div className="flex items-center gap-6 sm:px-0 px-6">
 					{/* <Link

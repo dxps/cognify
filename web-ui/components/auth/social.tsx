@@ -2,7 +2,9 @@
 
 import { FcGoogle } from 'react-icons/fc'
 import { Button } from '../ui/button'
-import { FaGithub } from 'react-icons/fa'
+// import { FaGithub } from 'react-icons/fa'
+import { TiVendorMicrosoft } from 'react-icons/ti'
+import { signIn } from '@/lib/auth-client'
 
 const Social = () => {
 	return (
@@ -19,9 +21,16 @@ const Social = () => {
 				variant="outline"
 				size="lg"
 				className="w-1/2 cursor-pointer"
-				onClick={() => {}}
+				onClick={async () => {
+					const res = await signIn.social({
+						provider: 'microsoft',
+						callbackURL: '/settings', // The URL to redirect to after the sign in.
+					})
+					console.log('>>> [Social :: Login w/ Microsoft]', res)
+				}}
 			>
-				<FaGithub className="h-5 w-5" />
+				{/* <FaGithub className="h-5 w-5" /> */}
+				<TiVendorMicrosoft className="h-5 w-5" />
 			</Button>
 		</div>
 	)

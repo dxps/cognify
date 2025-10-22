@@ -61,7 +61,9 @@ export default function RootLayout({
 						</header>
 					</>
 				</ThemeProvider>
-				{children}
+				<div className="h-full flex items-center justify-center bg-slate-200 dark:bg-slate-800">
+					{children}
+				</div>
 				<footer className="py-4">
 					<div className="container mx-auto text-xs text-muted-foreground text-center">
 						&copy; {new Date().getFullYear()} cognify

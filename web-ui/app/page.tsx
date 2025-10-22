@@ -10,11 +10,11 @@ const font = Poppins({
 
 export default function Home() {
 	return (
-		<main className="flex h-full flex-col items-center justify-center bg-slate-200">
+		<main className="flex h-full flex-col items-center justify-center bg-slate-200 dark:bg-slate-800">
 			<div className="space-y-6">
 				<h1
 					className={cn(
-						'text-4xl font-semibold text-slate-800 drop-shadow-md',
+						'text-4xl font-semibold text-slate-800  dark:text-slate-100 drop-shadow-md',
 						font.className
 					)}
 				>
@@ -25,7 +25,7 @@ export default function Home() {
 						<Button
 							variant="secondary"
 							size="lg"
-							className="cursor-pointer drop-shadow-sm bg-white"
+							className="cursor-pointer drop-shadow-sm bg-white dark:bg-slate-600"
 						>
 							Sign in
 						</Button>

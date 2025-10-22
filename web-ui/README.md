@@ -1,6 +1,6 @@
-# Cognify :: The Web UI part
+# Cognify :: Web UI
 
-This is the Web interface for the Cognify project.
+This is the Web interface part of the Cognify project.
 
 <br/>
 
@@ -9,11 +9,17 @@ This is the Web interface for the Cognify project.
 1. Run `npm i` to install the dependencies.
 1. Run `npx prisma generate` to generate the Prisma client.
 1. Create a `.env` file in the root directory and populate it with:
-    ```
+
+    ```properties
     DATABASE_URL="postgresql://{user}:{password}@{host}/{database}?sslmode=require&channel_binding=require"
-    BETTER_AUTH_SECRET='cognify-dev-auth-secret'  # Secret key used by better-auth logic.
+    BETTER_AUTH_SECRET='cognify-dev-auth-secret'
     BETTER_AUTH_URL=http://localhost:3000         # Base URL of the app.
+
+    MICROSOFT_ENTRA_ID_CLIENT_ID='{your-entra-id-client-id}'
+    MICROSOFT_ENTRA_ID_CLIENT_SECRET='{your-entra-id-client-secret}'
+    MICROSOFT_ENTRA_ID_TENANT_ID='{your-entra-id-tenant-id}'
     ```
+
 1. Run `npx prisma db push` to push the Prisma database schema to the database.
 
 <br/>

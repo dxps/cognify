@@ -53,7 +53,7 @@ export function Navbar() {
 
 	return (
 		<div
-			className="container mx-auto flex h-12 items-center justify-between"
+			className="container mx-auto flex h-10 items-center justify-between"
 			suppressHydrationWarning={true}
 		>
 			<div>

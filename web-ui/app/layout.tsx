@@ -64,10 +64,10 @@ export default function RootLayout({
 							</header>
 						</>
 					</ThemeProvider>
-					<div className="h-full flex items-center justify-center bg-slate-200 dark:bg-slate-800">
+					<div className="h-[calc(100vh-5rem)] flex items-center justify-center bg-slate-200 dark:bg-slate-800">
 						{children}
 					</div>
-					<footer className="py-4">
+					<footer className="py-3">
 						<div className="container mx-auto text-xs text-muted-foreground text-center">
 							&copy; {new Date().getFullYear()} cognify
 						</div>

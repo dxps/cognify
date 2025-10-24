@@ -18,7 +18,7 @@ export default function Home() {
 	const authState = useSelector(authSelector)
 
 	return (
-		<main className="flex h-full flex-col items-center justify-center space-y-6 bg-slate-200 dark:bg-slate-800">
+		<main className="flex flex-col items-center justify-center space-y-6 bg-slate-200 dark:bg-slate-800">
 			<h1
 				className={cn(
 					'text-4xl font-semibold text-slate-800  dark:text-slate-100 drop-shadow-md',

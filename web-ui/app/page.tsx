@@ -6,6 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { authSelector } from '@/features/auth/auth-slice'
 import { cn } from '@/lib/utils'
 import { Poppins } from 'next/font/google'
+import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 const font = Poppins({
@@ -27,7 +28,10 @@ export default function Home() {
 				Welcome!
 			</h1>
 			{authState.isLoggedIn && (
-				<p>{authState.user?.name}, you are logged in!</p>
+				<p>
+					<Link href="/settings">{authState.user?.name}</Link>, you
+					are logged in!
+				</p>
 			)}
 			{authState.isLoading && <Skeleton className="h-6 w-64" />}
 			{!authState.isLoading && !authState.isLoggedIn && (

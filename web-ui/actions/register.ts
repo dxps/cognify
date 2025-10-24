@@ -4,7 +4,7 @@ import { RegisterSchema } from '@/schemas'
 import z from 'zod'
 import bcrypt from 'bcrypt'
 import { db } from '@/lib/db'
-import { getUserByEmail } from '@/data/user'
+import { getUserByEmail } from '@/data/model/user'
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	// Simulating a delay, just to show the loading state in the LoginForm.

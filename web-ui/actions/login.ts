@@ -3,7 +3,7 @@
 import { LoginSchema } from '@/schemas'
 import z from 'zod'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
-import { getUserByEmail } from '@/data/user'
+import { getUserByEmail } from '@/data/model/user'
 import { auth } from '@/lib/auth'
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {

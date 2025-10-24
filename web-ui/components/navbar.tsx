@@ -7,6 +7,14 @@ import { signOut, useSession } from '@/lib/auth-client'
 import { Skeleton } from './ui/skeleton'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import {
+	setIsLoading,
+	setIsLoggedIn,
+	setUser,
+} from '@/features/auth/auth-slice'
+import { User } from '@/data/model/user'
 
 export const globalSections = [{ id: 1, name: 'Home', href: '/' }]
 
@@ -14,6 +22,7 @@ export function Navbar() {
 	const { data, isPending } = useSession()
 	const isLoggedIn = data?.user
 	const router = useRouter()
+	const dispatch = useDispatch()
 
 	const handleLogout = async () => {
 		const res = await signOut()
@@ -21,6 +30,26 @@ export function Navbar() {
 			router.push('/')
 		}
 	}
+
+	useEffect(() => {
+		if (!isPending) {
+			if (data?.session) {
+				console.log(
+					'>>> [Navbar] dispatching isLoggedIn and user to store'
+				)
+				const user: User = {
+					id: data.user.id,
+					email: data.user.email,
+					name: data.user.name,
+					image: data.user.image || '',
+					emailVerified: false,
+				}
+				dispatch(setUser(user))
+				dispatch(setIsLoggedIn(true))
+				dispatch(setIsLoading(false))
+			}
+		}
+	}, [isPending, dispatch, data])
 
 	return (
 		<div

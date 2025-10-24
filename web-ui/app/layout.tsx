@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navbar } from '@/components/navbar'
+import StoreProvider from './store-provider'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -41,35 +42,38 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html
-			lang="en"
-			// TODO: Added this just
-			suppressHydrationWarning
-		>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+		<StoreProvider>
+			<html
+				lang="en"
+				// TODO: Added this just to get rid of the warning regarding browser extensions
+				// (such as Proton Pass) that are interfering with the hydration.
+				suppressHydrationWarning
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
+				<body
+					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
-					<>
-						<header>
-							<Navbar />
-						</header>
-					</>
-				</ThemeProvider>
-				<div className="h-full flex items-center justify-center bg-slate-200 dark:bg-slate-800">
-					{children}
-				</div>
-				<footer className="py-4">
-					<div className="container mx-auto text-xs text-muted-foreground text-center">
-						&copy; {new Date().getFullYear()} cognify
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						<>
+							<header>
+								<Navbar />
+							</header>
+						</>
+					</ThemeProvider>
+					<div className="h-full flex items-center justify-center bg-slate-200 dark:bg-slate-800">
+						{children}
 					</div>
-				</footer>
-			</body>
-		</html>
+					<footer className="py-4">
+						<div className="container mx-auto text-xs text-muted-foreground text-center">
+							&copy; {new Date().getFullYear()} cognify
+						</div>
+					</footer>
+				</body>
+			</html>
+		</StoreProvider>
 	)
 }

@@ -1,5 +1,13 @@
 import { db } from '@/lib/db'
 
+export interface User {
+	id: string
+	email: string
+	name: string
+	image: string
+	emailVerified: boolean
+}
+
 export const getUserByEmail = async (email: string) => {
 	try {
 		const user = await db.user.findUnique({ where: { email } })

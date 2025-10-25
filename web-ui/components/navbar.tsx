@@ -34,9 +34,6 @@ export function Navbar() {
 	useEffect(() => {
 		if (!isPending) {
 			if (data?.session) {
-				console.log(
-					'>>> [Navbar] dispatching isLoggedIn and user to store'
-				)
 				const user: User = {
 					id: data.user.id,
 					email: data.user.email,

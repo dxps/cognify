@@ -64,7 +64,7 @@ export default function RootLayout({
 							</header>
 						</>
 					</ThemeProvider>
-					<div className="h-[calc(100vh-5rem)] flex items-center justify-center bg-slate-200 dark:bg-slate-800">
+					<div className="h-[calc(100vh-5.2rem)] flex items-center justify-center bg-slate-200 dark:bg-slate-800">
 						{children}
 					</div>
 					<footer className="py-3">

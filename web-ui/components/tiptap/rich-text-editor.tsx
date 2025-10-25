@@ -1,4 +1,5 @@
 'use client'
+
 import './tiptap.css'
 import { cn } from '@/lib/utils'
 import { ImageExtension } from '@/components/tiptap/extensions/image'
@@ -6,13 +7,11 @@ import { ImagePlaceholder } from '@/components/tiptap/extensions/image-placehold
 import SearchAndReplace from '@/components/tiptap/extensions/search-and-replace'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
-import Link from '@tiptap/extension-link'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
 import TextAlign from '@tiptap/extension-text-align'
 import { TextStyle } from '@tiptap/extension-text-style'
 import Typography from '@tiptap/extension-typography'
-import Underline from '@tiptap/extension-underline'
 import { EditorContent, type Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { TipTapFloatingMenu } from '@/components/tiptap/extensions/floating-menu'
@@ -34,12 +33,16 @@ const extensions = [
 			},
 		},
 		heading: {
-			levels: [1, 2, 3, 4],
+			levels: [1, 2, 3],
 		},
 	}),
 	Placeholder.configure({
 		emptyNodeClass: 'is-editor-empty',
 		placeholder: ({ node }) => {
+			console.log(
+				'>>> [RichTextEditor :: Placeholder] node.type.name:',
+				node.type.name
+			)
 			switch (node.type.name) {
 				case 'heading':
 					return `Heading ${node.attrs.level}`
@@ -49,7 +52,10 @@ const extensions = [
 					// never show the placeholder when editing code
 					return ''
 				default:
-					return "Write, type '/' for commands"
+					// TODO: Currently hiding it since the BubbleMenu doesn't immediately show.
+					//       It shows only when having the browser window unfocused and focused back.
+					// return "Write, type '/' for commands"
+					return ''
 			}
 		},
 		includeChildren: false,
@@ -60,8 +66,6 @@ const extensions = [
 	TextStyle,
 	Subscript,
 	Superscript,
-	Underline,
-	Link,
 	Color,
 	Highlight.configure({
 		multicolor: true,
@@ -94,8 +98,7 @@ export function RichTextEditor({ className }: { className?: string }) {
 	return (
 		<div
 			className={cn(
-				// 'relative max-h-[calc(100dvh-6rem)] w-full overflow-hidden overflow-y-scroll border bg-card pb-[60px] sm:pb-0',
-				'relative w-full min-h-[73vh] max-h-[73vh] overflow-hidden overflow-y-scroll border-0 bg-card pb-[60px] sm:pb-0',
+				'relative max-h-[calc(100dvh-6rem)] w-full overflow-hidden overflow-y-scroll border bg-card pb-[60px] sm:pb-0',
 				className
 			)}
 		>

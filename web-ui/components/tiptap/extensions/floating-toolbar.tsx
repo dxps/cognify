@@ -31,7 +31,7 @@ export function FloatingToolbar({ editor }: { editor: Editor | null }) {
 			e.preventDefault()
 		}
 
-		const el = editor.options.element
+		const el = editor.options.element as Element
 		el.addEventListener('contextmenu', handleContextMenu)
 
 		return () => el.removeEventListener('contextmenu', handleContextMenu)
@@ -49,8 +49,16 @@ export function FloatingToolbar({ editor }: { editor: Editor | null }) {
 					// 	placement: 'bottom',
 					// 	offset: [0, 10],
 					// }}
+					options={{
+						placement: 'bottom',
+						offset: { mainAxis: 0, crossAxis: 10 },
+					}}
 					shouldShow={() => {
 						// Show toolbar when editor is focused and has selection
+						console.log(
+							'>>> [BubbleMenu] shouldShow:',
+							editor.isEditable && editor.isFocused
+						)
 						return editor.isEditable && editor.isFocused
 					}}
 					editor={editor}

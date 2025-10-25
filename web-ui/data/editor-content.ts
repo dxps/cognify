@@ -1,5 +1,5 @@
 export const editorContent = `
-  <h1>Explore the rich text editor with Shadcn UI components 📝</h1>
+  <h1>Explore the rich text editor 📝</h1>
   <p>This is a powerful editor that supports many features:</p>
   <ul class="list-disc">
       <li>

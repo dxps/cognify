@@ -335,6 +335,15 @@ export function TipTapFloatingMenu({ editor }: { editor: Editor }) {
 					$from.parent.type.name !== 'codeBlock' &&
 					$from.parentOffset === currentLineText.length
 
+				console.log(
+					'>>> [FloatingMenu :: shouldShow] state.selection:',
+					state.selection,
+					'isSlashCommand:',
+					isSlashCommand,
+					'isOpen',
+					isOpen
+				)
+
 				if (!isSlashCommand) {
 					if (isOpen) setIsOpen(false)
 					return false

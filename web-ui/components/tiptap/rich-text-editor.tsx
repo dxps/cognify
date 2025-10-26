@@ -10,9 +10,9 @@ import Highlight from '@tiptap/extension-highlight'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
 import TextAlign from '@tiptap/extension-text-align'
-import { TextStyle } from '@tiptap/extension-text-style'
+import { TextStyleKit } from '@tiptap/extension-text-style'
 import Typography from '@tiptap/extension-typography'
-import { EditorContent, type Extension, useEditor } from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { TipTapFloatingMenu } from '@/components/tiptap/extensions/floating-menu'
 import { FloatingToolbar } from '@/components/tiptap/extensions/floating-toolbar'
@@ -63,7 +63,7 @@ const extensions = [
 	TextAlign.configure({
 		types: ['heading', 'paragraph'],
 	}),
-	TextStyle,
+	TextStyleKit,
 	Subscript,
 	Superscript,
 	Color,
@@ -79,7 +79,7 @@ const extensions = [
 export function RichTextEditor({ className }: { className?: string }) {
 	const editor = useEditor({
 		immediatelyRender: false,
-		extensions: extensions as Extension[],
+		extensions,
 		content: editorContent,
 		editorProps: {
 			attributes: {

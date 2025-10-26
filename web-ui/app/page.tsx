@@ -25,12 +25,12 @@ export default function Home() {
 					font.className
 				)}
 			>
-				Welcome!
+				Welcome
+				{authState.isLoggedIn ? ', ' : '!'}
 			</h1>
 			{authState.isLoggedIn && (
 				<p>
-					<Link href="/settings">{authState.user?.name}</Link>, you
-					are logged in!
+					<Link href="/settings">{authState.user?.name}</Link>!
 				</p>
 			)}
 			{authState.isLoading && <Skeleton className="h-6 w-64" />}

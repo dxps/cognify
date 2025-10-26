@@ -13,7 +13,7 @@ const SettingsPage = () => {
 	return (
 		<CardWrapper
 			headerLabel="Settings"
-			width="sm:w-[600px] md:w-[800px] min-h-[290px] sm:text-xs text-sm w-full"
+			className="sm:w-[600px] md:w-[800px] min-h-[230px] sm:text-xs text-sm w-full"
 		>
 			<div className="overflow-x-scroll">
 				{authState.isLoading && <Skeleton className="h-6 w-64" />}

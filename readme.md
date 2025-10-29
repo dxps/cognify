@@ -1,6 +1,6 @@
-## The Web UI
+## cognify
 
-...
+TBD description
 
 This project was created using `bun init` in [Bun v1.3.1](https://bun.com), using React/Shadcn+TailwindCSS template.
 

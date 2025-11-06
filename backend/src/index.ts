@@ -1,5 +1,3 @@
-// import { serve } from 'bun'
-// import index from './index.html'
 import { Elysia } from 'elysia'
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/bun-sql'
@@ -48,47 +46,11 @@ async function dbInitialCheck() {
 }
 
 function startServer() {
-	// const server = serve({
-	// 	routes: {
-	// 		// Serve index.html for all unmatched routes.
-	// 		'/*': index,
-
-	// 		'/api/hello': {
-	// 			async GET(req) {
-	// 				return Response.json({
-	// 					message: 'Hello, world!',
-	// 					method: 'GET',
-	// 				})
-	// 			},
-	// 			async PUT(req) {
-	// 				return Response.json({
-	// 					message: 'Hello, world!',
-	// 					method: 'PUT',
-	// 				})
-	// 			},
-	// 		},
-
-	// 		'/api/hello/:name': async (req) => {
-	// 			const name = req.params.name
-	// 			return Response.json({
-	// 				message: `Hello, ${name}!`,
-	// 			})
-	// 		},
-	// 	},
-
-	// 	development: process.env.NODE_ENV !== 'production' && {
-	// 		// Enable browser hot reloading in development
-	// 		hmr: true,
-
-	// 		// Echo console logs from the browser to the server
-	// 		console: true,
-	// 	},
-	// })
-	// console.log(`🚀 Server running at ${server.url}`)
-
-	const app = new Elysia().get('/', () => 'Hello!').listen(3008)
+	const app = new Elysia()
+		.get('/', () => 'The back-end side of cognify')
+		.listen(3011)
 
 	console.log(
-		`🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`
+		`🦊 Back-end server is running at ${app.server?.hostname}:${app.server?.port}`
 	)
 }

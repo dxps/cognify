@@ -1,15 +1,16 @@
-# backend
+## Cognify :: The back-end side
 
-To install dependencies:
+<br/>
 
-```bash
-bun install
-```
+### Setup
 
-To run:
+-   Run `bun install` to install the project dependencies.
+-   Run `docker compose up -d` to start the PostgreSQL database instance as a Docker container.
+-   Create a `.env` file (see `.env.example` for more information).
+-   Run `bun db:push` to provision (apply the changes to) the database.
 
-```bash
-bun run index.ts
-```
+<br/>
 
-This project was created using `bun init` in bun v1.3.1. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+### Usage
+
+-   `bun dev` to start a development server.

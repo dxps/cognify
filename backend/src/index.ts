@@ -1,4 +1,5 @@
 import { Elysia } from 'elysia'
+import { cors } from '@elysiajs/cors'
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/bun-sql'
 import { eq } from 'drizzle-orm'
@@ -47,10 +48,23 @@ async function dbInitialCheck() {
 
 function startServer() {
 	const app = new Elysia()
+		.use(
+			cors({
+				origin: 'http://localhost:3012',
+			})
+		)
+		.onError(({ code, status, set }) => {
+			if (code === 'NOT_FOUND') {
+				return { error: 'Route not found' }
+			}
+		})
 		.get('/', () => 'The back-end side of cognify')
+		.get('/api/hello', () => {
+			return { message: 'Hello from the back-end side' }
+		})
 		.listen(3011)
 
 	console.log(
-		`🦊 Back-end server is running at ${app.server?.hostname}:${app.server?.port}`
+		`🦊 The back-end server is running at ${app.server?.hostname}:${app.server?.port}`
 	)
 }

@@ -9,6 +9,7 @@ This project was created using `bun init` in [Bun v1.3.1](https://bun.com), usin
 ### Setup
 
 Being a Bun based project, you need to have [Bun](https://bun.sh/) installed.
+
 Run `bun install` to install the project dependencies.
 
 Additionally, you can apply the changes to the database by running `bun db:push`.<br/>

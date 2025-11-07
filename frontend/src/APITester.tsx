@@ -10,9 +10,12 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useRef, type FormEvent } from 'react'
+import { env } from './lib/env'
 
 export function APITester() {
 	const responseInputRef = useRef<HTMLTextAreaElement>(null)
+
+	console.log('>>> [APITester] env:', env)
 
 	const processApiOp = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -26,10 +29,10 @@ export function APITester() {
 			let url: URL
 			switch (side) {
 				case 'fe':
-					url = new URL(path, location.href)
+					url = new URL(path, env.FRONTEND_URL)
 					break
 				case 'be':
-					url = new URL(path, 'http://localhost:3011')
+					url = new URL(path, env.BACKEND_URL)
 					break
 			}
 

@@ -47,7 +47,7 @@ export function APITester() {
 	return (
 		<div className="flex flex-col gap-6">
 			<form onSubmit={processApiOp} className="flex items-center gap-2">
-				<Label htmlFor="method" className="sr-only">
+				<Label htmlFor="methodSide" className="sr-only">
 					Method
 				</Label>
 				<Select name="methodSide" defaultValue="GET fe">

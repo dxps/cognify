@@ -1,5 +1,6 @@
 import MobileNav from './mobile-nav'
 import { Link } from 'react-router-dom'
+import { ModeToggle } from './mode-toggle'
 
 export const categories = [
 	{ id: 1, name: 'Home', path: '/' },
@@ -32,6 +33,7 @@ export function Navbar() {
 
 			<div className="flex items-center gap-0">
 				{/* <ThemeToggle /> */}
+				{<ModeToggle />}
 			</div>
 		</div>
 	)

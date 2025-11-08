@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@/components/theme-provider'
 import { Routes, Route, Link } from 'react-router-dom'
 import './index.css'
 import HomeView from './views/HomeView'
@@ -7,20 +8,17 @@ import { Navbar } from './components/navbar'
 
 export function App() {
 	return (
-		<div className="text-center relative z-10">
-			{/* <nav className="flex justify-center gap-5 text-slate-500 text-md bg-white py-0.5 mb-6 w-full">
-				<Link to="/">Home</Link>
-				<Link to="/about">About</Link>
-				<Link to="/api-tester">API Tester</Link>
-			</nav> */}
-			<Navbar />
+		<ThemeProvider>
+			<div className="text-center relative z-10">
+				<Navbar />
 
-			<Routes>
-				<Route path="/" element={<HomeView />} />
-				<Route path="/about" element={<AboutView />} />
-				<Route path="/api-tester" element={<ApiTesterView />} />
-			</Routes>
-		</div>
+				<Routes>
+					<Route path="/" element={<HomeView />} />
+					<Route path="/about" element={<AboutView />} />
+					<Route path="/api-tester" element={<ApiTesterView />} />
+				</Routes>
+			</div>
+		</ThemeProvider>
 	)
 }
 

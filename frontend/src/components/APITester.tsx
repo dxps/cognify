@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useRef, type FormEvent } from 'react'
-import { env } from './lib/env'
+import { env } from '@/lib/env'
 
 export function APITester() {
 	const responseInputRef = useRef<HTMLTextAreaElement>(null)

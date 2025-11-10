@@ -1,9 +1,10 @@
-import { Elysia } from 'elysia'
+import { Elysia, type Context } from 'elysia'
 import { cors } from '@elysiajs/cors'
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/bun-sql'
 import { eq } from 'drizzle-orm'
 import { usersTable } from './db/schema'
+import { auth } from './auth'
 
 const db = drizzle({
 	connection: {
@@ -18,14 +19,14 @@ const db = drizzle({
 main()
 
 async function main() {
-	await dbInitialCheck()
+	// await dbInitialCheck()
 	startServer()
 }
 
 async function dbInitialCheck() {
 	const user: typeof usersTable.$inferInsert = {
+		id: '1',
 		name: 'John',
-		age: 30,
 		email: 'john@doe.com',
 	}
 	await db.insert(usersTable).values(user)
@@ -37,7 +38,7 @@ async function dbInitialCheck() {
 	await db
 		.update(usersTable)
 		.set({
-			age: 31,
+			emailVerified: true,
 		})
 		.where(eq(usersTable.email, user.email))
 	console.log('🧪 User info updated!')
@@ -47,12 +48,39 @@ async function dbInitialCheck() {
 }
 
 function startServer() {
+	const betterAuthView = (context: Context) => {
+		const BETTER_AUTH_ACCEPT_METHODS = ['POST', 'GET']
+		// validate request method
+		if (BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
+			return auth.handler(context.request)
+		} else {
+			context.status(405)
+		}
+	}
 	const app = new Elysia()
 		.use(
 			cors({
 				origin: 'http://localhost:3012',
+				allowedHeaders: ['Content-Type', 'Authorization'],
+				methods: ['POST', 'GET', 'OPTIONS'],
+				exposeHeaders: ['Content-Length'],
+				maxAge: 600,
+				credentials: true,
 			})
 		)
+		.all('/api/auth/*', betterAuthView)
+		.macro({
+			auth: {
+				async resolve({ status, request: { headers } }) {
+					const session = await auth.api.getSession({ headers })
+					if (!session) return status(401)
+					return {
+						user: session.user,
+						session: session.user,
+					}
+				},
+			},
+		})
 		.onError(({ code, status, set }) => {
 			if (code === 'NOT_FOUND') {
 				return { error: 'Route not found' }

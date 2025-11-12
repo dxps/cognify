@@ -5,6 +5,7 @@ import HomeView from './views/HomeView'
 import AboutView from './views/AboutView'
 import ApiTesterView from './views/ApiTesterView'
 import { Navbar } from './components/navbar'
+import LoginView from './views/LoginView'
 
 export function App() {
 	return (
@@ -16,6 +17,7 @@ export function App() {
 					<Route path="/" element={<HomeView />} />
 					<Route path="/about" element={<AboutView />} />
 					<Route path="/api-tester" element={<ApiTesterView />} />
+					<Route path="/login" element={<LoginView />} />
 				</Routes>
 			</div>
 		</ThemeProvider>

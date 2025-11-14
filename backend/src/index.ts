@@ -3,7 +3,7 @@ import { cors } from '@elysiajs/cors'
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/bun-sql'
 import { eq } from 'drizzle-orm'
-import { usersTable } from './db/schema'
+import { users } from './db/schema'
 import { auth } from './auth'
 
 const db = drizzle({
@@ -24,26 +24,26 @@ async function main() {
 }
 
 async function dbInitialCheck() {
-	const user: typeof usersTable.$inferInsert = {
+	const user: typeof users.$inferInsert = {
 		id: '1',
 		name: 'John',
 		email: 'john@doe.com',
 	}
-	await db.insert(usersTable).values(user)
+	await db.insert(users).values(user)
 	console.log('🧪 New user created!')
 
-	const users = await db.select().from(usersTable)
-	console.log('🧪 Getting all users from the database: ', users)
+	const usersRS = await db.select().from(users)
+	console.log('🧪 Getting all users from the database: ', usersRS)
 
 	await db
-		.update(usersTable)
+		.update(users)
 		.set({
 			emailVerified: true,
 		})
-		.where(eq(usersTable.email, user.email))
+		.where(eq(users.email, user.email))
 	console.log('🧪 User info updated!')
 
-	await db.delete(usersTable).where(eq(usersTable.email, user.email))
+	await db.delete(users).where(eq(users.email, user.email))
 	console.log('🧪 User deleted!')
 }
 

@@ -48,7 +48,7 @@ async function dbInitialCheck() {
 }
 
 function startServer() {
-	const betterAuthView = (context: Context) => {
+	const betterAuthAPI = (context: Context) => {
 		const BETTER_AUTH_ACCEPT_METHODS = ['POST', 'GET']
 		// validate request method
 		if (BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
@@ -68,7 +68,7 @@ function startServer() {
 				credentials: true,
 			})
 		)
-		.all('/api/auth/*', betterAuthView)
+		.all('/api/auth/*', betterAuthAPI)
 		.macro({
 			auth: {
 				async resolve({ status, request: { headers } }) {

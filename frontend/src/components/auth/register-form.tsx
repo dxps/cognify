@@ -13,23 +13,24 @@ import {
 } from '@/components/ui/form'
 import { RegisterSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
-import { useSearchParams, useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { FormError } from '../form-error'
-import { FormSuccess } from '../form-success'
+import { FormError } from '@/components/form/form-error'
+import { FormSuccess } from '@/components/form/form-success'
 import { useState, useTransition } from 'react'
 import { LoaderCircle } from 'lucide-react'
-import { signUp } from '@/lib/auth-client'
+import { signUp } from '@/lib/clients/auth-client'
 import { getCallbackURL } from '@/lib/shared'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 export const RegisterForm = () => {
 	const [error, setError] = useState<string | undefined>(undefined)
 	const [success, setSuccess] = useState<string | undefined>(undefined)
 	const [isPending, startTransition] = useTransition()
-	const router = useRouter()
-	const params = useSearchParams()
+	const navigate = useNavigate()
+	// const router = useRouter()
+	const [params, _] = useSearchParams()
 
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
@@ -61,7 +62,8 @@ export const RegisterForm = () => {
 						console.log(
 							'>>> [RegisterForm] Successfully signed up.'
 						)
-						router.push(getCallbackURL(params))
+						// router.push(getCallbackURL(params))
+						navigate(getCallbackURL(params))
 					},
 				},
 			})

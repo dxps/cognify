@@ -7,20 +7,21 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: 'pg',
 		schema,
-		// TBD: Its usage, after the migration was done.
-		//      I had to comment it out, otherwise, I got the error:
-		//      "The model "userss" was not found in the schema object"
-		// usePlural: true,
+		// debugLogs: true,
 	}),
 	emailAndPassword: {
 		enabled: true,
 	},
 	user: {
 		modelName: 'users',
-		fields: {
-			emailVerified: 'email_verified',
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
-		},
+	},
+	account: {
+		modelName: 'accounts',
+	},
+	verification: {
+		modelName: 'verifications',
+	},
+	session: {
+		modelName: 'sessions',
 	},
 })

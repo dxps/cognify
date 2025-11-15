@@ -11,6 +11,7 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
+		requireEmailVerification: true,
 	},
 	user: {
 		modelName: 'users',
@@ -24,4 +25,11 @@ export const auth = betterAuth({
 	session: {
 		modelName: 'sessions',
 	},
+	emailVerification: {
+		sendOnSignIn: true,
+		sendVerificationEmail: async ({ user, url, token }, request) => {
+			// TODO: Send email.
+		},
+	},
+	trustedOrigins: ['http://localhost:3012'],
 })

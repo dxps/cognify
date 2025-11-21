@@ -7,6 +7,7 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: 'pg',
 		schema,
+		// (i) In case it's needed during development.
 		// debugLogs: true,
 	}),
 	emailAndPassword: {
@@ -30,7 +31,18 @@ export const auth = betterAuth({
 	emailVerification: {
 		sendOnSignIn: true,
 		sendVerificationEmail: async ({ user, url, token }, request) => {
-			// TODO: Send email.
+			// This would normally send an email.
+			// For the current purpose, we'll just log it.
+			console.log(
+				'>>> [EmailVerification] sendVerificationEmail - user:',
+				user,
+				'url:',
+				url,
+				'token:',
+				token,
+				'request:',
+				request
+			)
 		},
 	},
 	trustedOrigins: ['http://localhost:3012'],

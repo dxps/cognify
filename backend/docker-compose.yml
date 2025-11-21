@@ -1,3 +1,4 @@
+name: cognify_db
 services:
   postgres:
     image: postgres:17-alpine
